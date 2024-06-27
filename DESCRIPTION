@@ -1,0 +1,26 @@
+Package: cpickr
+Type: Package
+Title: Tools for Processing and Filtering Plate Data
+Version: 0.1.0
+Authors@R: 
+    person("Bryan", "Nguyen", , "Bryan.Nguyen@water.ca.gov", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7791-4693"))
+Maintainer: Bryan Nguyen <Bryan.Nguyen@water.ca.gov>
+Description: Provides functions for processing and filtering plate data from
+    CSV files. It includes tools for splitting data into multiple files based
+    on specified criteria, processing data chunks, and performing various
+    data cleaning operations specific to plate-based experiments.
+Encoding: UTF-8
+LazyData: true
+License: MIT + file LICENSE
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports: 
+    dplyr,
+    readr,
+    tibble,
+    stats,
+    magrittr
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
