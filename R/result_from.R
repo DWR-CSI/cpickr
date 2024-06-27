@@ -20,7 +20,7 @@
 #' result_plate <- result_from(data)
 #' result_plate
 #' }
-result_from <- function() {
+result_from <- function(data) {
   result_plate <- data %>%
     dplyr::mutate(WellID = DestWellID) %>%
     dplyr::select(SampleID, PlateID, WellID)

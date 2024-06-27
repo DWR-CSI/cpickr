@@ -35,7 +35,7 @@ formatting the output for use with Hamilton robots.
 data <- tibble::tibble(
   SampleID = c("C234323CVP", "C240026CVP", "C240036CVP", "C240199CVP"),
   PlateID = c("CVP20240204CDFW01", "CVP20240204CDFW01", "CVP20240204CDFW01", "CVP20240218CDFW02"),
-  Well = c("A1", "A2", "A3","A1")
+  WellID = c("A1", "A2", "A3","A1")
 )
 write_hamilton_csvs(data)
 }
