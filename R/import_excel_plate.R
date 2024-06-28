@@ -11,10 +11,10 @@
 #' @return A tibble with columns for Sample ID, Plate ID, and Well ID.
 #' @export
 #'
-#' @importFrom readxl read_excel cell_rows cell_cols
+#' @importFrom readxl read_excel cell_limits
 #' @importFrom tidyr pivot_longer
 #' @importFrom dplyr mutate select
-#' @importFrom tibble rownames_to_column
+#' @importFrom tibble tibble
 #' @importFrom tools file_path_sans_ext
 #' @importFrom cellranger as.cell_limits
 #'
@@ -43,9 +43,9 @@ import_excel_plate <- function(file, sheet, start_cell, plate_id = NULL) {
   # Read the data
   data <- readxl::read_excel(file, sheet = sheet,
                              range = readxl::cell_limits(
-                                c(start_row, start_col),
-                                c(end_row, end_col)
-                                ),
+                               c(start_row, start_col),
+                               c(end_row, end_col)
+                             ),
                              col_names = FALSE)
 
   # Check dimensions
@@ -53,19 +53,20 @@ import_excel_plate <- function(file, sheet, start_cell, plate_id = NULL) {
     stop("Data does not appear to be from a 96-well plate (8 rows, 12 columns)")
   }
 
-  # Add column and row names
-  colnames(data) <- 1:12
-  rownames(data) <- LETTERS[1:8]
+  # Create a tibble with Row and Column information
+  long_data <- tibble::tibble(
+    Row = rep(LETTERS[1:8], each = 12),
+    Column = rep(1:12, times = 8),
+    SampleID = as.vector(t(data))
+  )
 
-  # Reshape the data
-  long_data <- data %>%
-    tibble::rownames_to_column("Row") %>%
-    tidyr::pivot_longer(cols = -Row, names_to = "Column", values_to = "SampleID") %>%
+  # Add PlateID and WellID
+  long_data <- long_data %>%
     dplyr::mutate(
       SampleID = as.character(SampleID),
       PlateID = plate_id,
       WellID = paste0(Row, Column)
-      ) %>%
+    ) %>%
     dplyr::select(SampleID, PlateID, WellID)
 
   return(long_data)
