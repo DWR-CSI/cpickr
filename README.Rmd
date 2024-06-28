@@ -61,6 +61,7 @@ Example usage will be placed here. Work in progress...
 
 ```{r example, eval = FALSE}
 library(cpickr)
+library(readr)
 ## basic example code
 
 subsampled_plate_data <- tibble::tibble(
@@ -84,7 +85,7 @@ sub_subsampled_plate_data <- subsample_plate_data(sub_subsampled_plate_data, sam
 write_hamilton_csvs(sub_subsampled_plate_data)
 
 # To see what the resulting destination plate would look like, use the result_from function on a Hamilton input .txt file.
-test_input_file <- read_csv("sub_subsampled_1.txt")
+test_input_file <- readr::read_csv("sub_subsampled_1.txt")
 result_plate <- result_from(test_input_file)
 result_plate
 ```
