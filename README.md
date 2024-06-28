@@ -29,6 +29,8 @@ This package depends on the following packages:
 - tibble
 - readxl
 - tidyr
+- cellranger
+- writexl
 
 ## Functions
 
