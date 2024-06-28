@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 The goal of cpickr is to create input files for the DWR-GeM lab Hamilton
-Nimbus robot to use as input for cherrypicking samples from 96-well
+Nimbus robots to use as input for cherrypicking samples from 96-well
 plates.
 
 ## Installation
@@ -15,7 +15,7 @@ plates.
 You can install the development version of cpickr like so:
 
 ``` r
-remote::install_github("DWR-CSI/cpickr")
+devtools::install_github("DWR-CSI/cpickr")
 ```
 
 ## Example
