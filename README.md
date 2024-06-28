@@ -20,17 +20,24 @@ devtools::install_github("DWR-CSI/cpickr")
 
 ### Dependencies
 
-This package depends on the following packages: - dplyr - magrittr -
-readr - stats - tibble
+This package depends on the following packages:
+
+- dplyr
+- magrittr
+- readr
+- stats
+- tibble
 
 ## Functions
 
-Currently, the package contains the following functions: -
-`subsample_plate_data()`: Subsample a plate dataset to include only the
-specified SampleIDs. - `write_hamilton_csvs()`: Write a text-formatted
-platemap to multiple CSV files for Hamilton robot input. -
-`result_from()`: Take a Hamilton input file and return the resulting
-destination plate layout.
+Currently, the package contains the following functions:
+
+- `subsample_plate_data()`: Subsample a plate dataset to include only
+  the specified SampleIDs.
+- `write_hamilton_csvs()`: Write a text-formatted platemap to multiple
+  CSV files for Hamilton robot input.
+- `result_from()`: Take a Hamilton input file and return the resulting
+  destination plate layout.
 
 ## Example
 
