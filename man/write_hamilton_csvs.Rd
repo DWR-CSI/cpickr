@@ -21,7 +21,7 @@ write_hamilton_csvs(
 
 \item{file_prefix}{Prefix for the output CSV filenames. Default is "plate_input_".}
 
-\item{auto_dest_well}{If TRUE, the destination well will be automatically filled in sequentially, i.e. A1,B1,C1, etc. Default is TRUE.}
+\item{auto_dest_well}{If TRUE, the destination well will be automatically filled in sequentially, i.e. A1,B1,C1, etc. Default is TRUE. If FALSE, then a blank column will be created for the destination well which must be filled in by the user afterwards.}
 }
 \value{
 Nothing is returned, but CSV files are written to the current working directory.

@@ -21,6 +21,14 @@
 #' result_plate
 #' }
 result_from <- function(data) {
+  # If data is a filepath, read it in with read_csv
+  if (is.character(data)) {
+    data <- read_csv(data)
+  }
+  # Check if the data has the correct columns
+  if (!all(c("SampleID", "PlateID", "WellID", "DestWellID") %in% names(data))) {
+    stop("Input data must contain columns SampleID, PlateID, WellID, and DestWellID. Are you sure the file is in the correct format?")
+  }
   result_plate <- data %>%
     dplyr::mutate(WellID = DestWellID) %>%
     dplyr::select(SampleID, PlateID, WellID)

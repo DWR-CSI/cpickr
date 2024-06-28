@@ -9,7 +9,7 @@
 #' @param rows_per_file Maximum number of rows per file. Default is 93.
 #' @param max_plate_ids Maximum number of unique plate IDs per file. Default is 20.
 #' @param file_prefix Prefix for the output CSV filenames. Default is "plate_input_".
-#' @param auto_dest_well If TRUE, the destination well will be automatically filled in sequentially, i.e. A1,B1,C1, etc. Default is TRUE.
+#' @param auto_dest_well If TRUE, the destination well will be automatically filled in sequentially, i.e. A1,B1,C1, etc. Default is TRUE. If FALSE, then a blank column will be created for the destination well which must be filled in by the user afterwards.
 #'
 #' @return Nothing is returned, but CSV files are written to the current working directory.
 #' @export
@@ -26,6 +26,30 @@
 write_hamilton_csvs <- function(data, rows_per_file = 93, max_plate_ids = 20, file_prefix = "plate_input_", auto_dest_well = TRUE) {
   if (!tibble::is_tibble(data)) {
     stop("Input 'data' must be a tibble.")
+  }
+  if (!is.numeric(rows_per_file) || rows_per_file <= 0) {
+    stop("Input 'rows_per_file' must be a positive integer.")
+  }
+  if (max_plate_ids > 20) {
+    stop("Input 'max_plate_ids' must be less than or equal to 20.")
+  }
+  if (!is.character(file_prefix)) {
+    stop("Input 'file_prefix' must be a character string.")
+  }
+  if (!is.logical(auto_dest_well)) {
+    stop("Input 'auto_dest_well' must be a logical value.")
+  }
+  if (!"PlateID" %in% names(data)) {
+    stop("Input 'data' must contain a column named 'PlateID'.")
+  }
+  if(!"SampleID" %in% names(data)) {
+    stop("Input 'data' must contain a column named 'SampleID'.")
+  }
+  if(!"WellID" %in% names(data)) {
+    stop("Input 'data' must contain a column named 'WellID'.")
+  }
+  if(rows_per_file > 96) {
+    stop("Input 'rows_per_file' cannot be greater than 96.")
   }
 
   well_ID_order <- paste0(rep(LETTERS[1:8], 12), rep(1:12, each = 8))
@@ -64,10 +88,18 @@ write_hamilton_csvs <- function(data, rows_per_file = 93, max_plate_ids = 20, fi
 
       if (auto_dest_well) {
         current_chunk <- current_chunk %>%
-          dplyr::mutate(DestWellID = well_ID_order[1:nrow(current_chunk)])
+          dplyr::mutate(
+            DestWellID = well_ID_order[1:nrow(current_chunk)],
+            SourceWellID = .data$WellID
+            ) %>%
+          select(SampleID, PlateID, SourceWellID, DestWellID)
       } else {
         current_chunk <- current_chunk %>%
-          dplyr::mutate(DestWellID = "")
+          dplyr::mutate(
+            DestWellID = "",
+            SourceWellID = .data$WellID
+            ) %>%
+          select(SampleID, PlateID, SourceWellID, DestWellID)
       }
 
       write_chunk(current_chunk, file_index)
@@ -111,6 +143,6 @@ write_hamilton_csvs <- function(data, rows_per_file = 93, max_plate_ids = 20, fi
 
   # Write the key file
   key_df <- dplyr::bind_rows(keys, .id = "File_Index")
-  key_file_name <- paste0(file_prefix, "_key.csv")
+  key_file_name <- paste0(file_prefix, "key.csv")
   readr::write_csv(key_df, key_file_name)
 }
