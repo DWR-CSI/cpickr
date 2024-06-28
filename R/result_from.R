@@ -3,6 +3,7 @@
 #'
 #' @importFrom dplyr mutate
 #' @importFrom magrittr %>%
+#' @importFrom readr read_csv
 #' @param data A tibble or input file with columns SampleID, PlateID, WellID, and DestWellID.
 
 #'
@@ -23,7 +24,7 @@
 result_from <- function(data) {
   # If data is a filepath, read it in with read_csv
   if (is.character(data)) {
-    data <- read_csv(data)
+    data <- readr::read_csv(data)
   }
   # Check if the data has the correct columns
   if (!all(c("SampleID", "PlateID", "WellID", "DestWellID") %in% names(data))) {

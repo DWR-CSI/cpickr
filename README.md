@@ -27,6 +27,8 @@ This package depends on the following packages:
 - readr
 - stats
 - tibble
+- readxl
+- tidyr
 
 ## Functions
 
@@ -38,6 +40,8 @@ Currently, the package contains the following functions:
   CSV files for Hamilton robot input.
 - `result_from()`: Take a Hamilton input file and return the resulting
   destination plate layout.
+- `import_excel_plate()`: Import 96-well plate data in a rectangular
+  format from Excel.
 
 ## Example
 

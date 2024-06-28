@@ -5,6 +5,9 @@
 #'
 #' @importFrom dplyr mutate
 #' @importFrom magrittr %>%
+#' @importFrom readr write_csv
+#' @importFrom stats setNames
+#' @importFrom tibble is_tibble tibble
 #' @param data A tibble to be split and written to CSV files.
 #' @param rows_per_file Maximum number of rows per file. Default is 93.
 #' @param max_plate_ids Maximum number of unique plate IDs per file. Default is 20.

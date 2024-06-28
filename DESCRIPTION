@@ -20,7 +20,13 @@ Imports:
     readr,
     tibble,
     stats,
-    magrittr
+    magrittr,
+	tidyr,
+	readxl,
+	testthat,
+	writexl,
+	tools,
+	cellranger
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
