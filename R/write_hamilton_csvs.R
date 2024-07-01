@@ -131,7 +131,10 @@ write_hamilton_csvs <- function(data, rows_per_file = 93, max_plate_ids = 20, fi
     )
 
     current_chunk <- current_chunk %>%
-      dplyr::mutate(PlateID = plate_id_map[.data$PlateID])
+      dplyr::mutate(
+        SourceWellID = .data$WellID,
+        PlateID = plate_id_map[.data$PlateID]
+        )
 
     if (auto_dest_well) {
       current_chunk <- current_chunk %>%
@@ -140,7 +143,8 @@ write_hamilton_csvs <- function(data, rows_per_file = 93, max_plate_ids = 20, fi
       current_chunk <- current_chunk %>%
         dplyr::mutate(DestWellID = "")
     }
-
+    current_chunk <- current_chunk %>%
+      select(SampleID, PlateID, SourceWellID, DestWellID)
     write_chunk(current_chunk, file_index)
   }
 

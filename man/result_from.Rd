@@ -4,10 +4,12 @@
 \alias{result_from}
 \title{Take a Hamilton input file and return the resulting destination plate.}
 \usage{
-result_from(data)
+result_from(data, platename = NULL)
 }
 \arguments{
-\item{data}{A tibble or input file with columns SampleID, PlateID, WellID, and DestWellID.}
+\item{data}{A tibble or input file with columns SampleID, PlateID, SourceWellID, and DestWellID.}
+
+\item{platename}{A character string with the name of the plate being imported. If not provided, the filename or a default name "NewPlate" will be used.}
 }
 \value{
 Returns a tibble with columns SampleID, PlateID, and WellID.
@@ -20,7 +22,7 @@ Take a Hamilton input file and return the resulting destination plate.
 data <- tibble::tibble(
   SampleID = c("C234323CVP", "C240026CVP", "C240036CVP", "C240199CVP"),
   PlateID = c("CVP20240204CDFW01", "CVP20240204CDFW01", "CVP20240204CDFW01", "CVP20240218CDFW02"),
-  WellID = c("A1", "A2", "A3","A1"),
+  SourceWellID = c("A1", "A2", "A3","A1"),
   DestWellID = c("A1", "A2", "A3","A4")
 )
 result_plate <- result_from(data)
