@@ -6,13 +6,13 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of cpickr is to create input files for the DWR-GeM lab Hamilton
-Nimbus robots to use as input for cherrypicking samples from 96-well
-plates.
+The goal of cpickr is to create and manipulate input files for the
+DWR-GeM lab Hamilton Nimbus robots to use as input for cherrypicking
+samples from 96-well and 384-well plates.
 
 ## Installation
 
-You can install the development version of cpickr like so:
+You can install the development version of cpickr from GitHub like so:
 
 ``` r
 devtools::install_github("DWR-CSI/cpickr")
@@ -44,10 +44,13 @@ Currently, the package contains the following functions:
   destination plate layout.
 - `import_excel_plate()`: Import 96-well plate data in a rectangular
   format from Excel.
+- `convert_to_excel_layout()`: Convert plate data to an Excel
+  spreadsheet with a 96-well or 384-well layout. No other function
+  supports 384-well plates at the moment.
 
 ## Example
 
-Example usage will be placed here. Work in progress…
+### Cherrypicking file generation
 
 ``` r
 library(cpickr)
@@ -80,7 +83,25 @@ result_plate <- result_from(test_input_file)
 result_plate
 ```
 
-A large example of a full plate map input file (before
+### Importing and Exporting plate data from and to Excel.
+
+The `convert_to_excel_layout()` function takes plate data (with columns
+SampleID, PlateID, and WellID) and creates an Excel file that visually
+represents the plate layout. It supports both 96-well and 384-well plate
+formats. This function is particularly useful for visualizing the plate
+layout or for creating a template for manual data entry.
+
+``` r
+# Import plate data from Excel
+plate_data <- import_excel_plate("path/to/input_plate.xlsx", sheet = 1, start_cell = "A1")
+
+# Convert the imported data to an Excel file with plate layout
+convert_to_excel_layout(plate_data, "output_plate_layout.xlsx", n_wells = 96)
+```
+
+### Example Data
+
+An example of a full plate map input file (before
 subsetting/subsampling) can be found in the `data/raw` folder. This file
-is called `example_plate_masterlist.csv`. This is preloaded into the
+is called `example_plate_masterlist.csv`. It is preloaded into the
 package and can be accessed as `example_plate_data`.
