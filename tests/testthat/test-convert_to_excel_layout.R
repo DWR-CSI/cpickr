@@ -70,7 +70,7 @@ test_that("convert_to_excel_layout handles 384-well plate correctly", {
   excel_data <- readxl::read_excel(temp_file)
   expect_equal(nrow(excel_data), 16) # 16 rows
   expect_equal(ncol(excel_data), 25) # 24 columns + 1 row name column
-  expect_equal(excel_data[1,1:16], LETTERS[1:16])
+  expect_equal(excel_data[[1]], LETTERS[1:16])
   expect_equal(as.character(colnames(excel_data)), as.character(c("Row", 1:24)))
 
   # Check content of cells
