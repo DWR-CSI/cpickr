@@ -9,17 +9,24 @@ convert_to_excel_layout(plate_data, output_file, n_wells)
 \arguments{
 \item{plate_data}{A tibble with columns SampleID, PlateID, and WellID}
 
-\item{output_file}{Path to the output Excel file}
+\item{output_file}{Path to the output Excel file where the data will be written using \code{write_xlsx()}. The filename should contain the .xlsx file extension.}
 
 \item{n_wells}{Number of wells in the plate (96 or 384)}
 }
 \value{
-Invisibly returns TRUE if successful
+Invisibly returns TRUE if successful.
 }
 \description{
 This function takes a tibble with plate data and converts it to an Excel spreadsheet
 with a 96-well or 384-well plate layout, including row and column labels.
 }
+\details{
+This function writes the provided data to the specified Excel-formatted file. If successful, it returns TRUE invisibly.
+}
+\section{Side effects}{
+ This function writes data to a file on the file system.
+}
+
 \examples{
 \dontrun{
 plate_data <- import_excel_plate("input.xlsx", sheet = 1, start_cell = "A1")

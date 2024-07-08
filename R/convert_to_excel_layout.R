@@ -4,10 +4,14 @@
 #' with a 96-well or 384-well plate layout, including row and column labels.
 #'
 #' @param plate_data A tibble with columns SampleID, PlateID, and WellID
-#' @param output_file Path to the output Excel file
+#' @param output_file Path to the output Excel file where the data will be written using `write_xlsx()`. The filename should contain the .xlsx file extension.
 #' @param n_wells Number of wells in the plate (96 or 384)
 #'
-#' @return Invisibly returns TRUE if successful
+#' @details This function writes the provided data to the specified Excel-formatted file. If successful, it returns TRUE invisibly.
+#'
+#' @return Invisibly returns TRUE if successful.
+#'
+#' @section Side effects: This function writes data to a file on the file system.
 #' @export
 #'
 #' @importFrom dplyr mutate select arrange n_distinct bind_rows filter
@@ -99,13 +103,8 @@ convert_to_excel_layout <- function(plate_data, output_file, n_wells) {
   # Replace NA with character(NA)
   plate_layout[is.na(plate_layout)] <- NA_character_
 
-  # Add column headers
-  header_row <- c("Row", as.character(cols))
-  plate_layout_with_header <- rbind(header_row, plate_layout)
 
-  # Write to Excel
-  plate_layout_with_header <- as.data.frame(plate_layout_with_header)
-  writexl::write_xlsx(plate_layout_with_header, output_file)
+  writexl::write_xlsx(plate_layout, output_file)
 
   # In convert_to_excel_layout function, after writing to Excel:
   if (!file.exists(output_file)) {

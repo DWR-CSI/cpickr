@@ -1,7 +1,7 @@
 Package: cpickr
 Type: Package
 Title: Tools for Processing and Filtering Plate Data
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person("Bryan", "Nguyen", , "Bryan.Nguyen@water.ca.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7791-4693"))

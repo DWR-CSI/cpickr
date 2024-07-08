@@ -45,15 +45,15 @@ test_that("convert_to_excel_layout handles 96-well plate correctly", {
 
   # Read the Excel file and check its contents
   excel_data <- readxl::read_excel(temp_file)
-  expect_equal(nrow(excel_data), 9) # 8 rows + 1 header row
+  expect_equal(nrow(excel_data), 8) # 8 rows
   expect_equal(ncol(excel_data), 13) # 12 columns + 1 row name column
-  expect_equal(excel_data[[1]], c("Row", LETTERS[1:8]))
-  expect_equal(as.numeric(excel_data[1, 2:13]), 1:12)
+  expect_equal(excel_data[[1]], c(LETTERS[1:8]))
+  expect_equal(as.character(colnames(excel_data)), c("Row", as.character(1:12)))
 
 
   # Check content of cells
-  expect_equal(excel_data[2, 2] %>% pull(), "Sample1") # A1
-  expect_equal(excel_data[9, 13] %>% pull(), "Sample96") # H12
+  expect_equal(excel_data[1, 2] %>% pull(), "Sample1") # A1
+  expect_equal(excel_data[8, 13] %>% pull(), "Sample96") # H12
 
   unlink(temp_file)
 })
@@ -68,14 +68,14 @@ test_that("convert_to_excel_layout handles 384-well plate correctly", {
 
   # Read the Excel file and check its contents
   excel_data <- readxl::read_excel(temp_file)
-  expect_equal(nrow(excel_data), 17) # 16 rows + 1 header row
+  expect_equal(nrow(excel_data), 16) # 16 rows
   expect_equal(ncol(excel_data), 25) # 24 columns + 1 row name column
-  expect_equal(excel_data[[1]], c("Row", LETTERS[1:16]))
-  expect_equal(as.numeric(excel_data[1, 2:25]), 1:24)
+  expect_equal(excel_data[1,1:16], LETTERS[1:16])
+  expect_equal(as.character(colnames(excel_data)), as.character(c("Row", 1:24)))
 
   # Check content of cells
-  expect_equal(excel_data[2, 2] %>% pull(), "Sample1") # A1
-  expect_equal(excel_data[17, 25] %>% pull(), "Sample384") # P24
+  expect_equal(excel_data[1, 2] %>% pull(), "Sample1") # A1
+  expect_equal(excel_data[16, 25] %>% pull(), "Sample384") # P24
 
   unlink(temp_file)
 })
@@ -89,10 +89,10 @@ test_that("convert_to_excel_layout handles empty wells correctly", {
 
   # Read the Excel file and check its contents
   excel_data <- readxl::read_excel(temp_file)
-  expect_true(is.na(excel_data[2, 2] %>% pull())) # A1 should be empty
-  expect_true(is.na(excel_data[3, 3] %>% pull())) # B2 should be empty
-  expect_true(is.na(excel_data[4, 4] %>% pull())) # C3 should be empty
-  expect_false(is.na(excel_data[2, 3] %>% pull())) # A2 should not be empty
+  expect_true(is.na(excel_data[1, 2] %>% pull())) # A1 should be empty
+  expect_true(is.na(excel_data[2, 3] %>% pull())) # B2 should be empty
+  expect_true(is.na(excel_data[3, 4] %>% pull())) # C3 should be empty
+  expect_false(is.na(excel_data[1, 3] %>% pull())) # A2 should not be empty
 
   unlink(temp_file)
 })
@@ -105,8 +105,8 @@ test_that("convert_to_excel_layout handles fewer wells than plate size", {
 
   # Read the Excel file and check its contents
   excel_data <- readxl::read_excel(temp_file)
-  expect_equal(sum(!is.na(excel_data[2:9, 2:13])), 50)  # 50 non-NA cells
-  expect_equal(sum(is.na(excel_data[2:9, 2:13])), 46)   # 46 NA cells
+  expect_equal(sum(!is.na(excel_data[1:8, 2:13])), 50)  # 50 non-NA cells
+  expect_equal(sum(is.na(excel_data[1:8, 2:13])), 46)   # 46 NA cells
 
   unlink(temp_file)
 })
