@@ -34,7 +34,7 @@ write_hamilton_csvs <- function(data, rows_per_file = 93, max_plate_ids = 20, fi
     stop("Input 'rows_per_file' must be a positive integer.")
   }
   if (max_plate_ids > 24) {
-    stop("Input 'max_plate_ids' must be less than or equal to 20.")
+    stop("Input 'max_plate_ids' must be less than or equal to 24.")
   }
   if (!is.character(file_prefix)) {
     stop("Input 'file_prefix' must be a character string.")
