@@ -66,7 +66,7 @@ subsampled_plate_data <- tibble::tibble(
 write_hamilton_csvs(
   subsampled_plate_data, # Plate data showing the Sample names, Source plates, and Source wells
   rows_per_file = 96, # Maximum number of rows per file. Cannot be more than 96.
-  max_plate_ids = 20, # Maximum number of unique plate IDs per file. Cannot be more than 20.
+  max_plate_ids = 24, # Maximum number of unique plate IDs per file. Cannot be more than 24.
   file_prefix = "test_", 
   auto_dest_well = TRUE # Automatically fill in the destination well sequentially by column, A1, B1, C1..A2, B2, C2... etc. Leave blank to fill in manually afterwards.
   )
