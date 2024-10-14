@@ -15,7 +15,13 @@ samples from 96-well and 384-well plates.
 You can install the development version of cpickr from GitHub like so:
 
 ``` r
-devtools::install_github("DWR-CSI/cpickr")
+remotes::install_github("DWR-CSI/cpickr")
+```
+
+If you don't have the "remotes" package installed, you will first need to install it like so:
+
+```r
+install.packages("remotes")
 ```
 
 ### Dependencies
