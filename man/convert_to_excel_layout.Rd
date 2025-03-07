@@ -2,26 +2,35 @@
 % Please edit documentation in R/convert_to_excel_layout.R
 \name{convert_to_excel_layout}
 \alias{convert_to_excel_layout}
-\title{Convert plate data to Excel spreadsheet}
+\title{Convert plate data to Excel spreadsheet with plate layout}
 \usage{
 convert_to_excel_layout(plate_data, output_file, n_wells)
 }
 \arguments{
-\item{plate_data}{A tibble with columns SampleID, PlateID, and WellID}
+\item{plate_data}{A tibble with columns SampleID, PlateID, and WellID. All samples
+must belong to the same plate (single PlateID).}
 
-\item{output_file}{Path to the output Excel file where the data will be written using \code{write_xlsx()}. The filename should contain the .xlsx file extension.}
+\item{output_file}{Path to the output Excel file where the data will be written using
+\code{write_xlsx()}. The filename should contain the .xlsx file extension.}
 
-\item{n_wells}{Number of wells in the plate (96 or 384)}
+\item{n_wells}{Number of wells in the plate (96 or 384). For 96-well plates, the layout
+will be 8 rows (A-H) by 12 columns (1-12). For 384-well plates, the layout will be
+16 rows (A-P) by 24 columns (1-24).}
 }
 \value{
 Invisibly returns TRUE if successful.
 }
 \description{
 This function takes a tibble with plate data and converts it to an Excel spreadsheet
-with a 96-well or 384-well plate layout, including row and column labels.
+with a visual 96-well or 384-well plate layout, including row and column labels.
+The resulting Excel file shows samples arranged in their actual plate positions,
+making it easier to visualize sample distribution across the plate.
 }
 \details{
-This function writes the provided data to the specified Excel-formatted file. If successful, it returns TRUE invisibly.
+This function validates input data to ensure all WellIDs are valid for the specified
+plate size. Empty wells are represented as NA values in the Excel output. The rows in
+the output file are ordered alphabetically (A-H for 96-well, A-P for 384-well) and
+columns are ordered numerically (1-12 for 96-well, 1-24 for 384-well).
 }
 \section{Side effects}{
  This function writes data to a file on the file system.

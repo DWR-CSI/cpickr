@@ -7,15 +7,21 @@
 result_from(data, platename = NULL)
 }
 \arguments{
-\item{data}{A tibble or input file with columns SampleID, PlateID, SourceWellID, and DestWellID.}
+\item{data}{A tibble or file path to a Hamilton input file. Must contain columns SampleID,
+PlateID, SourceWellID, and DestWellID.}
 
-\item{platename}{A character string with the name of the plate being imported. If not provided, the filename or a default name "NewPlate" will be used.}
+\item{platename}{A character string with the name of the destination plate being created.
+If not provided and data is a file path, the filename will be used as the plate name.
+If not provided and data is a tibble, "NewPlate" will be used as the default name.}
 }
 \value{
 Returns a tibble with columns SampleID, PlateID, and WellID.
 }
 \description{
-Take a Hamilton input file and return the resulting destination plate.
+This function takes a Hamilton robot input file (or equivalent tibble) and creates a
+representation of the destination plate after the robot has performed the cherrypicking
+operation. It is useful for tracking samples through the laboratory workflow and
+understanding the resulting plate layout.
 }
 \examples{
 \dontrun{

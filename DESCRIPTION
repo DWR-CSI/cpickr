@@ -21,12 +21,11 @@ Imports:
     tibble,
     stats,
     magrittr,
-	tidyr,
-	readxl,
-	testthat,
-	writexl,
-	tools,
-	cellranger
+    tidyr,
+    readxl,
+    writexl,
+    tools,
+    cellranger
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

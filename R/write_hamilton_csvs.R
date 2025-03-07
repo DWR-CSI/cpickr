@@ -1,20 +1,32 @@
 #' Write a tibble to multiple CSV files for Hamilton robot input
 #'
 #' This function splits a tibble into multiple CSV files based on specified criteria,
-#' formatting the output for use with Hamilton robots.
+#' formatting the output for use with Hamilton robots in cherrypicking operations. 
+#' The function creates formatted text files with required columns (SampleID, PlateID, 
+#' SourceWellID, DestWellID) and also generates a key file that maps original plate IDs 
+#' to the simplified format required by Hamilton robots.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom magrittr %>%
 #' @importFrom readr write_csv
 #' @importFrom stats setNames
 #' @importFrom tibble is_tibble tibble
-#' @param data A tibble to be split and written to CSV files.
-#' @param rows_per_file Maximum number of rows per file. Default is 93.
-#' @param max_plate_ids Maximum number of unique plate IDs per file. Default is 20.
+#' @param data A tibble to be split and written to CSV files. Must contain columns 
+#'   'SampleID', 'PlateID', and 'WellID'.
+#' @param rows_per_file Maximum number of rows per file. Default is 93. Cannot exceed 96 
+#'   (the number of wells in a standard 96-well plate).
+#' @param max_plate_ids Maximum number of unique plate IDs per file. Default is 20, but 
+#'   the hard limit is 24 (maximum supported by Hamilton robots).
 #' @param file_prefix Prefix for the output CSV filenames. Default is "plate_input_".
-#' @param auto_dest_well If TRUE, the destination well will be automatically filled in sequentially, i.e. A1,B1,C1, etc. Default is TRUE. If FALSE, then a blank column will be created for the destination well which must be filled in by the user afterwards.
+#' @param auto_dest_well If TRUE, the destination well will be automatically filled in 
+#'   sequentially by column (A1,B1,C1, etc.). Default is TRUE. If FALSE, an empty 
+#'   destination well column will be created for manual entry.
 #'
-#' @return Nothing is returned, but CSV files are written to the current working directory.
+#' @return Nothing is returned, but CSV files are written to the current working directory:
+#' \itemize{
+#'   \item Individual input files with format \code{[file_prefix][index].txt}
+#'   \item A key file \code{[file_prefix]key.csv} that maps simplified plate IDs to original IDs
+#' }
 #' @export
 #'
 #' @examples

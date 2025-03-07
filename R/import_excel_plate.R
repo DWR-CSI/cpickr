@@ -1,14 +1,23 @@
-#' Import 96-well plate data from Excel
+#' Import 96-well plate data from Excel in rectangular format
 #'
-#' This function imports data from a 96-well plate (8 rows, 12 columns)
-#' embedded within an Excel spreadsheet.
+#' This function imports data from a 96-well plate (8 rows by 12 columns)
+#' embedded within an Excel spreadsheet. The function expects the data to be in 
+#' a rectangular format that visually represents the plate layout, with rows A-H
+#' and columns 1-12, where each cell contains a sample identifier.
 #'
-#' @param file Path to the Excel file
+#' @param file Path to the Excel file containing the plate data
 #' @param sheet Sheet name or number containing the plate data
-#' @param start_cell Top-left cell of the plate data (e.g., "B2"). Do not include headers.
-#' @param plate_id Optional identifier for the plate, usually the plate name or label. If not provided, the filename will be used.
+#' @param start_cell Top-left cell of the plate data (e.g., "B2"). This should be the cell
+#'   containing the value for well A1. Do not include headers or row/column labels.
+#' @param plate_id Optional identifier for the plate, usually the plate name or label. 
+#'   If not provided, the filename (without extension) will be used as the plate ID.
 #'
-#' @return A tibble with columns for Sample ID, Plate ID, and Well ID.
+#' @return A tibble with three columns:
+#'   \itemize{
+#'     \item SampleID: The sample identifier from each well
+#'     \item PlateID: The plate identifier (from plate_id parameter or filename)
+#'     \item WellID: The well location in format "A1", "B2", etc.
+#'   }
 #' @export
 #'
 #' @importFrom readxl read_excel cell_limits

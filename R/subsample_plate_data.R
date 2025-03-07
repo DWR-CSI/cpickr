@@ -1,11 +1,20 @@
-#' Subsample Plate Data
+#' Subsample Plate Data for Cherrypicking
 #'
-#' This function subsamples a plate dataset to include only the specified SampleIDs.
+#' This function subsamples a plate dataset to include only the specified SampleIDs,
+#' which is useful for creating cherrypicking lists for Hamilton robots. The function
+#' filters the input dataset to retain only the samples of interest while preserving
+#' their plate and well locations.
 #'
-#' @param plate_data A data frame containing plate data with at least a SampleID column.
+#' @param plate_data A data frame or tibble containing plate data with at least a SampleID 
+#'   column. Typically also contains PlateID and WellID columns for use with other cpickr 
+#'   functions.
 #' @param sample_ids A character vector of SampleIDs to keep in the subsampled dataset.
+#'   These represent the specific samples to be cherrypicked.
+# Note: file_prefix parameter was removed from the function
 #'
-#' @return A data frame containing only the rows with SampleIDs present in the sample_ids list.
+#' @return A data frame containing only the rows with SampleIDs present in the sample_ids list,
+#'   maintaining all original columns and their values. The function provides a message indicating
+#'   how many samples were found compared to the number requested.
 #'
 #' @export
 #'

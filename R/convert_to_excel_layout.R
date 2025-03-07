@@ -1,13 +1,23 @@
-#' Convert plate data to Excel spreadsheet
+#' Convert plate data to Excel spreadsheet with plate layout
 #'
 #' This function takes a tibble with plate data and converts it to an Excel spreadsheet
-#' with a 96-well or 384-well plate layout, including row and column labels.
+#' with a visual 96-well or 384-well plate layout, including row and column labels.
+#' The resulting Excel file shows samples arranged in their actual plate positions,
+#' making it easier to visualize sample distribution across the plate.
 #'
-#' @param plate_data A tibble with columns SampleID, PlateID, and WellID
-#' @param output_file Path to the output Excel file where the data will be written using `write_xlsx()`. The filename should contain the .xlsx file extension.
-#' @param n_wells Number of wells in the plate (96 or 384)
+#' @param plate_data A tibble with columns SampleID, PlateID, and WellID. All samples
+#'   must belong to the same plate (single PlateID).
+#' @param output_file Path to the output Excel file where the data will be written using 
+#'   `write_xlsx()`. The filename should contain the .xlsx file extension.
+#' @param n_wells Number of wells in the plate (96 or 384). For 96-well plates, the layout 
+#'   will be 8 rows (A-H) by 12 columns (1-12). For 384-well plates, the layout will be 
+#'   16 rows (A-P) by 24 columns (1-24).
 #'
-#' @details This function writes the provided data to the specified Excel-formatted file. If successful, it returns TRUE invisibly.
+#' @details 
+#' This function validates input data to ensure all WellIDs are valid for the specified 
+#' plate size. Empty wells are represented as NA values in the Excel output. The rows in 
+#' the output file are ordered alphabetically (A-H for 96-well, A-P for 384-well) and 
+#' columns are ordered numerically (1-12 for 96-well, 1-24 for 384-well).
 #'
 #' @return Invisibly returns TRUE if successful.
 #'
@@ -17,6 +27,7 @@
 #' @importFrom dplyr mutate select arrange n_distinct bind_rows filter
 #' @importFrom tidyr pivot_wider
 #' @importFrom writexl write_xlsx
+#' @importFrom dplyr all_of
 #'
 #' @examples
 #' \dontrun{
@@ -70,6 +81,9 @@ convert_to_excel_layout <- function(plate_data, output_file, n_wells) {
       Col = as.integer(substr(WellID, 2, nchar(WellID)))
     )
 
+  # Ensure Col is not interpreted as a global variable
+  `Col` <- NULL # This tells R that Col is a local variable
+  
   # Pivot the data to wide format
   plate_layout <- plate_data %>%
     dplyr::select(Row, Col, SampleID) %>%

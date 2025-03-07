@@ -2,20 +2,28 @@
 % Please edit documentation in R/subsample_plate_data.R
 \name{subsample_plate_data}
 \alias{subsample_plate_data}
-\title{Subsample Plate Data}
+\title{Subsample Plate Data for Cherrypicking}
 \usage{
 subsample_plate_data(plate_data, sample_ids)
 }
 \arguments{
-\item{plate_data}{A data frame containing plate data with at least a SampleID column.}
+\item{plate_data}{A data frame or tibble containing plate data with at least a SampleID
+column. Typically also contains PlateID and WellID columns for use with other cpickr
+functions.}
 
-\item{sample_ids}{A character vector of SampleIDs to keep in the subsampled dataset.}
+\item{sample_ids}{A character vector of SampleIDs to keep in the subsampled dataset.
+These represent the specific samples to be cherrypicked.}
 }
 \value{
-A data frame containing only the rows with SampleIDs present in the sample_ids list.
+A data frame containing only the rows with SampleIDs present in the sample_ids list,
+maintaining all original columns and their values. The function provides a message indicating
+how many samples were found compared to the number requested.
 }
 \description{
-This function subsamples a plate dataset to include only the specified SampleIDs.
+This function subsamples a plate dataset to include only the specified SampleIDs,
+which is useful for creating cherrypicking lists for Hamilton robots. The function
+filters the input dataset to retain only the samples of interest while preserving
+their plate and well locations.
 }
 \examples{
 plate_data <- data.frame(
