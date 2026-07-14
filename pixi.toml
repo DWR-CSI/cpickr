@@ -1,0 +1,25 @@
+[workspace]
+name = "cpickr"
+version = "0.1.2"
+description = "Tools for Processing and Filtering Plate Data"
+authors = ["Bryan Nguyen <Bryan.Nguyen@water.ca.gov>"]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+r-base = ">=4.0"
+r-dplyr = "*"
+r-readr = "*"
+r-tibble = "*"
+r-magrittr = "*"
+r-tidyr = "*"
+r-readxl = "*"
+r-writexl = "*"
+r-cellranger = "*"
+r-testthat = ">=3.0.0"
+r-devtools = "*"
+
+[tasks]
+test = "Rscript -e 'devtools::test()'"
+document = "Rscript -e 'devtools::document()'"
+check = "mkdir -p ~/tmp_build && TMPDIR=~/tmp_build Rscript -e 'devtools::check()'"

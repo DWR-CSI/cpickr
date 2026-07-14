@@ -33,7 +33,7 @@ result_from <- function(data, platename = NULL) {
   # If data is a filepath, read it in with read_csv
   if (is.character(data)) {
     plate_filename = basename(data)
-    data <- readr::read_csv(data)
+    data <- readr::read_csv(data, show_col_types = FALSE)
     is_file = TRUE
   } else {
     is_file = FALSE

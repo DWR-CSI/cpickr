@@ -3,3 +3,6 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^data-raw$
+^\.pixi$
+^pixi\.toml$
+^pixi\.lock$

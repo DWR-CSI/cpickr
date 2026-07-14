@@ -4,6 +4,7 @@
 # cpickr
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 The goal of cpickr is to create and manipulate input files for the
@@ -16,12 +17,6 @@ You can install the development version of cpickr from GitHub like so:
 
 ``` r
 remotes::install_github("DWR-CSI/cpickr")
-```
-
-If you don't have the "remotes" package installed, you will first need to install it like so:
-
-```r
-install.packages("remotes")
 ```
 
 ### Dependencies
@@ -46,6 +41,9 @@ Currently, the package contains the following functions:
   the specified SampleIDs.
 - `write_hamilton_csvs()`: Write a text-formatted platemap to multiple
   CSV files for Hamilton robot input.
+- `write_integra_files()`: Write a semi-colon delimited file format and
+  a TSV summary file for the Integra Assist Plus robot cherrypicking
+  operations.
 - `result_from()`: Take a Hamilton input file and return the resulting
   destination plate layout.
 - `import_excel_plate()`: Import 96-well plate data in a rectangular
@@ -56,7 +54,7 @@ Currently, the package contains the following functions:
 
 ## Example
 
-### Cherrypicking file generation
+### Cherrypicking file generation for Hamilton Nimbus
 
 ``` r
 library(cpickr)
@@ -72,7 +70,7 @@ subsampled_plate_data <- tibble::tibble(
 write_hamilton_csvs(
   subsampled_plate_data, # Plate data showing the Sample names, Source plates, and Source wells
   rows_per_file = 96, # Maximum number of rows per file. Cannot be more than 96.
-  max_plate_ids = 24, # Maximum number of unique plate IDs per file. Cannot be more than 24.
+  max_plate_ids = 20, # Maximum number of unique plate IDs per file. Cannot be more than 20.
   file_prefix = "test_", 
   auto_dest_well = TRUE # Automatically fill in the destination well sequentially by column, A1, B1, C1..A2, B2, C2... etc. Leave blank to fill in manually afterwards.
   )
@@ -88,6 +86,30 @@ test_input_file <- readr::read_csv("sub_subsampled_1.txt")
 result_plate <- result_from(test_input_file)
 result_plate
 ```
+
+### Cherrypicking file generation for Integra Assist Plus
+
+For the Integra Assist Plus robot, the `write_integra_files()` function
+is used. It automatically manages deck constraints (a maximum of 96
+samples per target plate, and a configurable maximum of unique source
+plates per run, e.g. 3).
+
+``` r
+# Generate export files for Integra Assist Plus
+write_integra_files(
+  subsampled_plate_data,       # Input tibble containing SampleID, PlateID, WellID
+  target_plate_prefix = "TARGET",
+  file_prefix = "integra_",
+  output_dir = ".",            # Output directory
+  max_source_plates = 3,       # Maximum number of unique source plates per run (default is 3)
+  transfer_volume = 25,        # Default transfer volume in microliters
+  auto_dest_well = TRUE        # Sequentially map target wells (A1 to H12)
+)
+```
+
+This will write individual semi-colon delimited run files
+(`integra_1.csv`, `integra_2.csv`, etc.) and a tab-separated summary
+file `integra_summary.tsv` detailing each round on the robot.
 
 ### Importing and Exporting plate data from and to Excel.
 
