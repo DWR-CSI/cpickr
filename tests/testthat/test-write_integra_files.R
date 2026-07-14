@@ -163,7 +163,7 @@ test_that("write_integra_files handles TransferVolume column and default transfe
   prefix1 <- paste0(tempfile(), "_")
   write_integra_files(data1, file_prefix = prefix1, transfer_volume = 120)
   
-  f1 <- paste0(prefix1, "1.csv")
+  f1 <- paste0(prefix1, "1.txt")
   df1 <- readr::read_delim(f1, delim = ";", show_col_types = FALSE)
   expect_equal(df1$TransferVolume, 120)
   unlink(c(f1, paste0(prefix1, "summary.tsv")))
@@ -180,7 +180,7 @@ test_that("write_integra_files handles TransferVolume column and default transfe
   prefix2 <- paste0(tempfile(), "_")
   write_integra_files(data2, file_prefix = prefix2, transfer_volume = 50) # default is ignored
 
-  f2 <- paste0(prefix2, "1.csv")
+  f2 <- paste0(prefix2, "1.txt")
   df2 <- readr::read_delim(f2, delim = ";", show_col_types = FALSE)
   expect_equal(df2$TransferVolume, random_vols)
   unlink(c(f2, paste0(prefix2, "summary.tsv")))
@@ -195,7 +195,7 @@ test_that("write_integra_files respects auto_dest_well = FALSE", {
   prefix <- paste0(tempfile(), "_")
   write_integra_files(data, file_prefix = prefix, auto_dest_well = FALSE)
 
-  f <- paste0(prefix, "1.csv")
+  f <- paste0(prefix, "1.txt")
   df <- readr::read_delim(f, delim = ";", show_col_types = FALSE)
   expect_true(all(is.na(df$TargetWell) | df$TargetWell == ""))
   unlink(c(f, paste0(prefix, "summary.tsv")))
@@ -218,7 +218,7 @@ test_that("write_integra_files writes to user-specified output_dir", {
   # Check that directory was created and files written inside it
   expect_true(dir.exists(temp_dir))
   
-  f1 <- file.path(temp_dir, paste0(prefix, "1.csv"))
+  f1 <- file.path(temp_dir, paste0(prefix, "1.txt"))
   fsummary <- file.path(temp_dir, paste0(prefix, "summary.tsv"))
   
   expect_true(file.exists(f1))
