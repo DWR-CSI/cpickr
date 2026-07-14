@@ -168,7 +168,7 @@ write_integra_files <- function(data,
   
   for (idx in seq_along(runs)) {
     run <- runs[[idx]]
-    run_file_name <- paste0(full_prefix, idx, ".csv")
+    run_file_name <- paste0(full_prefix, idx, ".txt")
     
     out_df <- run$rows %>%
       dplyr::select(SampleID, SourcePlateID, SourceWell, TargetPlateID, TargetWell, TransferVolume)
